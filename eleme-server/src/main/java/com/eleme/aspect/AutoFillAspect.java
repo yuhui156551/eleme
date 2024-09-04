@@ -28,7 +28,7 @@ public class AutoFillAspect {
      * 切入点
      * com.sky.mapper包下包含AutoFill注解的所有类和方法
      */
-    @Pointcut("execution(* com.sky.mapper.*.*(..)) && @annotation(com.sky.annotation.AutoFill)")
+    @Pointcut("execution(* com.eleme.mapper.*.*(..)) && @annotation(com.eleme.annotation.AutoFill)")
     public void autoFillPointCut() {
 
     }

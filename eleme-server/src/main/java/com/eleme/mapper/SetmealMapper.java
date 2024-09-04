@@ -1,8 +1,11 @@
 package com.eleme.mapper;
 
 import com.eleme.annotation.AutoFill;
+import com.eleme.dto.SetmealPageQueryDTO;
 import com.eleme.entity.Setmeal;
 import com.eleme.enumeration.OperationType;
+import com.eleme.vo.SetmealVO;
+import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -20,4 +23,6 @@ public interface SetmealMapper {
     //自定义注解
     @AutoFill(OperationType.INSERT)
     void insert(Setmeal setmeal);
+
+    Page<SetmealVO> pageQuery(SetmealPageQueryDTO setmealPageQueryDTO);
 }

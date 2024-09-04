@@ -5,6 +5,7 @@ import com.eleme.entity.Dish;
 import com.eleme.mapper.DishMapper;
 import com.eleme.service.DishService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
  * @author yuhui
  * @date 2024/9/4 19:01
  */
+@Service
 public class DishServiceImpl implements DishService {
     @Autowired
     private DishMapper dishMapper;

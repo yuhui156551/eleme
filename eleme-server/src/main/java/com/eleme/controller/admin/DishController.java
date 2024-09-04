@@ -4,6 +4,7 @@ import com.eleme.entity.Dish;
 import com.eleme.result.Result;
 import com.eleme.service.DishService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +26,8 @@ public class DishController {
     @Autowired
     private DishService dishService;
     
-    @GetMapping("/list")
+    @GetMapping("/list") 
+    @ApiOperation("根据分类id查询菜品")
     public Result<List<Dish>> list(Long categoryId){//query查询，直接在路径后面拼接
         List<Dish> dishList = dishService.list(categoryId);
         return Result.success(dishList);
