@@ -3,6 +3,7 @@ package com.eleme.service;
 import com.eleme.dto.SetmealDTO;
 import com.eleme.dto.SetmealPageQueryDTO;
 import com.eleme.result.PageResult;
+import com.eleme.vo.SetmealVO;
 
 import java.util.List;
 
@@ -13,4 +14,8 @@ public interface SetmealService {
     PageResult pageQuery(SetmealPageQueryDTO setmealPageQueryDTO);
 
     void deleteBatch(List<Long> ids);
+    
+    SetmealVO getByIdWithDish(Long id);
+    
+    void update(SetmealDTO setmealDTO);
 }
