@@ -6,18 +6,23 @@ import com.eleme.constant.StatusConstant;
 import com.eleme.context.BaseContext;
 import com.eleme.dto.EmployeeDTO;
 import com.eleme.dto.EmployeeLoginDTO;
+import com.eleme.dto.EmployeePageQueryDTO;
 import com.eleme.entity.Employee;
 import com.eleme.exception.AccountLockedException;
 import com.eleme.exception.AccountNotFoundException;
 import com.eleme.exception.PasswordErrorException;
 import com.eleme.mapper.EmployeeMapper;
+import com.eleme.result.PageResult;
 import com.eleme.service.EmployeeService;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -75,6 +80,19 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setUpdateUser(BaseContext.getCurrentId());
         
         employeeMapper.insert(employee);
+    }
+
+    @Override
+    public PageResult pageQuery(EmployeePageQueryDTO employeePageQueryDTO) {
+        // select * from employee limit 0,10
+        PageHelper.startPage(employeePageQueryDTO.getPage(), employeePageQueryDTO.getPageSize());
+        
+        Page<Employee> page = employeeMapper.pageQuery(employeePageQueryDTO);
+
+        long total = page.getTotal();
+        List<Employee> result = page.getResult();
+        
+        return new PageResult(total, result);
     }
 
 }

@@ -3,8 +3,10 @@ package com.eleme.controller.admin;
 import com.eleme.constant.JwtClaimsConstant;
 import com.eleme.dto.EmployeeDTO;
 import com.eleme.dto.EmployeeLoginDTO;
+import com.eleme.dto.EmployeePageQueryDTO;
 import com.eleme.entity.Employee;
 import com.eleme.properties.JwtProperties;
+import com.eleme.result.PageResult;
 import com.eleme.result.Result;
 import com.eleme.service.EmployeeService;
 import com.eleme.utils.JwtUtil;
@@ -13,10 +15,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -64,11 +63,18 @@ public class EmployeeController {
         return Result.success(employeeLoginVO);
     }
     
-    @PostMapping("/")
+    @PostMapping
     @ApiOperation("新增员工")
     public Result save(@RequestBody EmployeeDTO employeeDTO){
         employeeService.save(employeeDTO);
         return Result.success();
+    }
+    
+    @GetMapping("/page")
+    @ApiOperation("分类查询")
+    public Result<PageResult> page(EmployeePageQueryDTO employeePageQueryDTO){
+        PageResult pageResult = employeeService.pageQuery(employeePageQueryDTO);
+        return Result.success(pageResult);
     }
 
     /**
