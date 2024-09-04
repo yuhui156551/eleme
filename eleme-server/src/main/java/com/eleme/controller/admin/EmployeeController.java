@@ -1,6 +1,7 @@
 package com.eleme.controller.admin;
 
 import com.eleme.constant.JwtClaimsConstant;
+import com.eleme.dto.EmployeeDTO;
 import com.eleme.dto.EmployeeLoginDTO;
 import com.eleme.entity.Employee;
 import com.eleme.properties.JwtProperties;
@@ -61,6 +62,13 @@ public class EmployeeController {
                 .build();
 
         return Result.success(employeeLoginVO);
+    }
+    
+    @PostMapping("/")
+    @ApiOperation("新增员工")
+    public Result save(@RequestBody EmployeeDTO employeeDTO){
+        employeeService.save(employeeDTO);
+        return Result.success();
     }
 
     /**

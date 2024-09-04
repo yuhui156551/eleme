@@ -1,7 +1,10 @@
 package com.eleme.service.impl;
 
 import com.eleme.constant.MessageConstant;
+import com.eleme.constant.PasswordConstant;
 import com.eleme.constant.StatusConstant;
+import com.eleme.context.BaseContext;
+import com.eleme.dto.EmployeeDTO;
 import com.eleme.dto.EmployeeLoginDTO;
 import com.eleme.entity.Employee;
 import com.eleme.exception.AccountLockedException;
@@ -9,9 +12,12 @@ import com.eleme.exception.AccountNotFoundException;
 import com.eleme.exception.PasswordErrorException;
 import com.eleme.mapper.EmployeeMapper;
 import com.eleme.service.EmployeeService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
+
+import java.time.LocalDateTime;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -52,6 +58,23 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         //3、返回实体对象
         return employee;
+    }
+
+    @Override
+    public void save(EmployeeDTO employeeDTO) {
+        Employee employee = new Employee();
+        BeanUtils.copyProperties(employeeDTO, employee);
+        //设置属性
+        employee.setStatus(StatusConstant.ENABLE);
+        employee.setPassword(DigestUtils.md5DigestAsHex(PasswordConstant.DEFAULT_PASSWORD.getBytes()));
+        //设置当前记录的创建时间和修改时间
+        employee.setCreateTime(LocalDateTime.now());
+        employee.setUpdateTime(LocalDateTime.now());
+        //设置当前记录创建人id和修改人id
+        employee.setCreateUser(BaseContext.getCurrentId());//目前写个假数据，后期修改
+        employee.setUpdateUser(BaseContext.getCurrentId());
+        
+        employeeMapper.insert(employee);
     }
 
 }
