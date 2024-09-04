@@ -1,5 +1,8 @@
 package com.eleme.mapper;
 
+import com.eleme.annotation.AutoFill;
+import com.eleme.entity.Setmeal;
+import com.eleme.enumeration.OperationType;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -14,4 +17,7 @@ public interface SetmealMapper {
     @Select("select count(id) from setmeal where category_id = #{categoryId}")
     Integer countByCategoryId(Long id);
 
+    //自定义注解
+    @AutoFill(OperationType.INSERT)
+    void insert(Setmeal setmeal);
 }
