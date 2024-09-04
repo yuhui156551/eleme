@@ -1,9 +1,12 @@
 package com.eleme.service.impl;
 
+import com.eleme.constant.MessageConstant;
+import com.eleme.constant.StatusConstant;
 import com.eleme.dto.SetmealDTO;
 import com.eleme.dto.SetmealPageQueryDTO;
 import com.eleme.entity.Setmeal;
 import com.eleme.entity.SetmealDish;
+import com.eleme.exception.DeletionNotAllowedException;
 import com.eleme.mapper.DishMapper;
 import com.eleme.mapper.SetmealDishMapper;
 import com.eleme.mapper.SetmealMapper;
@@ -61,5 +64,24 @@ public class SetmealServiceImpl implements SetmealService {
         PageHelper.startPage(pageNum, pageSize);
         Page<SetmealVO> page = setmealMapper.pageQuery(setmealPageQueryDTO);
         return new PageResult(page.getTotal(), page.getResult());
+    }
+
+    @Override
+    @Transactional
+    public void deleteBatch(List<Long> ids) {
+        ids.forEach(id -> {
+            Setmeal setmeal = setmealMapper.getById(id);
+            if(StatusConstant.ENABLE == setmeal.getStatus()){
+                //起售中的套餐不能删除
+                throw new DeletionNotAllowedException(MessageConstant.SETMEAL_ON_SALE);
+            }
+        });
+
+        ids.forEach(setmealId -> {
+            //删除套餐表中的数据
+            setmealMapper.deleteById(setmealId);
+            //删除套餐菜品关系表中的数据
+            setmealDishMapper.deleteBySetmealId(setmealId);
+        });
     }
 }
