@@ -4,6 +4,7 @@ import com.eleme.dto.DishDTO;
 import com.eleme.dto.DishPageQueryDTO;
 import com.eleme.entity.Dish;
 import com.eleme.result.PageResult;
+import com.eleme.vo.DishVO;
 
 import java.util.List;
 
@@ -20,4 +21,8 @@ public interface DishService {
     PageResult pageQuery(DishPageQueryDTO dishPageQueryDTO);
 
     void deleteBatch(List<Long> ids);
+
+    DishVO getByIdWithFlavor(Long id);
+
+    void updateWithFlavor(DishDTO dishDTO);
 }
