@@ -1,8 +1,11 @@
 package com.eleme.mapper;
 
 import com.eleme.annotation.AutoFill;
+import com.eleme.dto.DishPageQueryDTO;
 import com.eleme.entity.Dish;
 import com.eleme.enumeration.OperationType;
+import com.eleme.vo.DishVO;
+import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -28,4 +31,6 @@ public interface DishMapper {
      */
     @AutoFill(value = OperationType.INSERT)
     void insert(Dish dish);
+
+    Page<DishVO> pageQuery(DishPageQueryDTO dishPageQueryDTO);
 }
