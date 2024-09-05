@@ -1,6 +1,8 @@
 package com.eleme.mapper;
 
+import com.eleme.annotation.AutoFill;
 import com.eleme.entity.Dish;
+import com.eleme.enumeration.OperationType;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -18,4 +20,12 @@ public interface DishMapper {
     Integer countByCategoryId(Long categoryId);
 
     List<Dish> list(Dish dish);
+
+    /**
+     * 插入菜品数据
+     *
+     * @param dish
+     */
+    @AutoFill(value = OperationType.INSERT)
+    void insert(Dish dish);
 }

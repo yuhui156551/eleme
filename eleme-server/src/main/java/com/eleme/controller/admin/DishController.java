@@ -1,5 +1,6 @@
 package com.eleme.controller.admin;
 
+import com.eleme.dto.DishDTO;
 import com.eleme.entity.Dish;
 import com.eleme.result.Result;
 import com.eleme.service.DishService;
@@ -7,9 +8,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,7 +18,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/admin/dish")
-@Api(tags = "套餐相关接口")
+@Api(tags = "菜品相关接口")
 @Slf4j
 public class DishController {
     
@@ -31,5 +30,12 @@ public class DishController {
     public Result<List<Dish>> list(Long categoryId){//query查询，直接在路径后面拼接
         List<Dish> dishList = dishService.list(categoryId);
         return Result.success(dishList);
+    }
+    
+    @PostMapping
+    @ApiOperation("新增菜品")
+    public Result save(@RequestBody DishDTO dishDTO) {
+        dishService.saveWithFlavor(dishDTO);
+        return Result.success();
     }
 }

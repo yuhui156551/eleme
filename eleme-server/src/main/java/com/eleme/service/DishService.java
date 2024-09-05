@@ -1,5 +1,6 @@
 package com.eleme.service;
 
+import com.eleme.dto.DishDTO;
 import com.eleme.entity.Dish;
 
 import java.util.List;
@@ -11,4 +12,6 @@ import java.util.List;
 public interface DishService {
 
     List<Dish> list(Long categoryId);
+
+    void saveWithFlavor(DishDTO dishDTO);
 }
