@@ -47,4 +47,11 @@ public class DishController {
         PageResult pageResult = dishService.pageQuery(dishPageQueryDTO);
         return Result.success(pageResult);
     }
+
+    @DeleteMapping
+    @ApiOperation("菜品批量删除")
+    public Result delete(@RequestParam List<Long> ids) {
+        dishService.deleteBatch(ids);//后绪步骤实现
+        return Result.success();
+    }
 }
