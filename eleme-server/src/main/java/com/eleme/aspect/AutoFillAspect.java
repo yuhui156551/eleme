@@ -38,18 +38,17 @@ public class AutoFillAspect {
      */
     @Before("autoFillPointCut()")
     public void autoFill(JoinPoint joinPoint) {
-        log.info("开始进行公共字段自动填充");
+        /////////////////////重要////////////////////////////////////
+        //可先进行调试，是否能进入该方法 提前在mapper方法添加AutoFill注解
+        log.info("开始进行公共字段自动填充...");
 
 //        获取到当前拦截的方法上的数据库操作类型
 //        获取方法签名对象
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-
 //        获取方法上的注解对象
         AutoFill autoFill = signature.getMethod().getAnnotation(AutoFill.class);
-
 //        获取数据库操作类型
         OperationType operationType = autoFill.value();
-
 //        获取到当前被拦截的方法的参数---实体对象
         Object[] args = joinPoint.getArgs();
         if (args == null || args.length == 0) {
