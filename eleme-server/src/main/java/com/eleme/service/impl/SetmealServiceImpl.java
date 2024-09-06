@@ -12,6 +12,7 @@ import com.eleme.mapper.SetmealDishMapper;
 import com.eleme.mapper.SetmealMapper;
 import com.eleme.result.PageResult;
 import com.eleme.service.SetmealService;
+import com.eleme.vo.DishItemVO;
 import com.eleme.vo.SetmealVO;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -117,4 +118,16 @@ public class SetmealServiceImpl implements SetmealService {
         //3、重新插入套餐和菜品的关联关系，操作setmeal_dish表，执行insert
         setmealDishMapper.insertBatch(setmealDishes);
     }
+    
+    @Override
+    public List<Setmeal> list(Setmeal setmeal) {
+        List<Setmeal> list = setmealMapper.list(setmeal);
+        return list;
+    }
+
+    @Override
+    public List<DishItemVO> getDishItemById(Long id) {
+        return setmealMapper.getDishItemBySetmealId(id);
+    }
+
 }
