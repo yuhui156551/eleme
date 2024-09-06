@@ -77,4 +77,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                 userId(BaseContext.getCurrentId()).
                 build());
     }
+
+    @Override
+    public void cleanShoppingCart() {
+        shoppingCartMapper.deleteByUserId(BaseContext.getCurrentId());
+    }
 }
