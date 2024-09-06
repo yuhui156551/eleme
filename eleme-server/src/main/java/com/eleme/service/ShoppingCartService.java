@@ -1,6 +1,9 @@
 package com.eleme.service;
 
 import com.eleme.dto.ShoppingCartDTO;
+import com.eleme.entity.ShoppingCart;
+
+import java.util.List;
 
 public interface ShoppingCartService {
 
@@ -9,4 +12,9 @@ public interface ShoppingCartService {
      * @param shoppingCartDTO
      */
     void addShoppingCart(ShoppingCartDTO shoppingCartDTO);
+    /**
+     * 查看购物车
+     * @return
+     */
+    List<ShoppingCart> showShoppingCart();
 }
