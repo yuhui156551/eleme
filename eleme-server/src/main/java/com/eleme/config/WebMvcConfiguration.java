@@ -1,6 +1,7 @@
 package com.eleme.config;
 
 import com.eleme.interceptor.JwtTokenAdminInterceptor;
+import com.eleme.interceptor.JwtTokenUserInterceptor;
 import com.eleme.json.JacksonObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,8 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 
     @Autowired
     private JwtTokenAdminInterceptor jwtTokenAdminInterceptor;
+    @Autowired
+    private JwtTokenUserInterceptor jwtTokenUserInterceptor;
 
     /**
      * 注册自定义拦截器
@@ -40,6 +43,11 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
         registry.addInterceptor(jwtTokenAdminInterceptor)
                 .addPathPatterns("/admin/**")
                 .excludePathPatterns("/admin/employee/login");
+        
+        registry.addInterceptor(jwtTokenUserInterceptor)
+                .addPathPatterns("/user/**")
+                .excludePathPatterns("/user/user/login")
+                .excludePathPatterns("/user/shop/status");
     }
 
     /**
@@ -47,18 +55,42 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
      * @return
      */
     @Bean
-    public Docket docket() {
+    public Docket docket1(){
         ApiInfo apiInfo = new ApiInfoBuilder()
-                .title("饿了么项目接口文档")
+                .title("饿了么外卖项目接口文档")
                 .version("1.0")
-                .description("饿了么项目接口文档")
+                .description("饿了么外卖项目接口文档")
                 .build();
+
         Docket docket = new Docket(DocumentationType.SWAGGER_2)
+                .groupName("管理端接口")
                 .apiInfo(apiInfo)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.eleme.controller"))
+                //指定生成接口需要扫描的包
+                .apis(RequestHandlerSelectors.basePackage("com.eleme.controller.admin"))
                 .paths(PathSelectors.any())
                 .build();
+
+        return docket;
+    }
+
+    @Bean
+    public Docket docket2(){
+        ApiInfo apiInfo = new ApiInfoBuilder()
+                .title("饿了么外卖项目接口文档")
+                .version("1.0")
+                .description("饿了么外卖项目接口文档")
+                .build();
+
+        Docket docket = new Docket(DocumentationType.SWAGGER_2)
+                .groupName("用户端接口")
+                .apiInfo(apiInfo)
+                .select()
+                //指定生成接口需要扫描的包
+                .apis(RequestHandlerSelectors.basePackage("com.eleme.controller.user"))
+                .paths(PathSelectors.any())
+                .build();
+
         return docket;
     }
 

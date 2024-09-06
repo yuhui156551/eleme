@@ -18,3 +18,7 @@ eleme:
     port: 6379
     password: 123456
     database: 10
+    
+  wechat:
+    appid: wxffb3637a228223b8
+    secret: 84311df9199ecacdf4f12d27b6b9522d
