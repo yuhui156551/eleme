@@ -74,25 +74,25 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
         return docket;
     }
 
-    @Bean
-    public Docket docket2(){
-        ApiInfo apiInfo = new ApiInfoBuilder()
-                .title("饿了么外卖项目接口文档")
-                .version("1.0")
-                .description("饿了么外卖项目接口文档")
-                .build();
-
-        Docket docket = new Docket(DocumentationType.SWAGGER_2)
-                .groupName("用户端接口")
-                .apiInfo(apiInfo)
-                .select()
-                //指定生成接口需要扫描的包
-                .apis(RequestHandlerSelectors.basePackage("com.eleme.controller.user"))
-                .paths(PathSelectors.any())
-                .build();
-
-        return docket;
-    }
+//    @Bean
+//    public Docket docket2(){
+//        ApiInfo apiInfo = new ApiInfoBuilder()
+//                .title("饿了么外卖项目接口文档")
+//                .version("1.0")
+//                .description("饿了么外卖项目接口文档")
+//                .build();
+//
+//        Docket docket = new Docket(DocumentationType.SWAGGER_2)
+//                .groupName("用户端接口")
+//                .apiInfo(apiInfo)
+//                .select()
+//                //指定生成接口需要扫描的包
+//                .apis(RequestHandlerSelectors.basePackage("com.eleme.controller.user"))
+//                .paths(PathSelectors.any())
+//                .build();
+//
+//        return docket;
+//    }
 
     /**
      * 设置静态资源映射

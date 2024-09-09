@@ -36,6 +36,7 @@ public class DishVO implements Serializable {
     private String categoryName;
     //菜品关联的口味
     private List<DishFlavor> flavors = new ArrayList<>();
-
+    //1删除 0正常
+    private Integer deleted;
     //private Integer copies;
 }

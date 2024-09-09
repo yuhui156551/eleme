@@ -9,6 +9,7 @@ import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -38,7 +39,7 @@ public interface DishMapper {
     @Select("select * from dish where id = #{id}")
     Dish getById(Long id);
 
-    @Delete("delete from dish where id = #{id}")
+    @Update("update dish set deleted = 1 where id = #{id}")
     void deleteById(Long id);
 
     @AutoFill(value = OperationType.UPDATE)

@@ -72,6 +72,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public List<ShoppingCart> showShoppingCart() {
+        //TODO更新图片
         return shoppingCartMapper.list(ShoppingCart.
                 builder().
                 userId(BaseContext.getCurrentId()).
