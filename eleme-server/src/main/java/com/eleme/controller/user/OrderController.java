@@ -1,16 +1,14 @@
 package com.eleme.controller.user;
 
 import com.eleme.dto.OrdersSubmitDTO;
+import com.eleme.result.PageResult;
 import com.eleme.result.Result;
 import com.eleme.service.OrderService;
 import com.eleme.vo.OrderSubmitVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author yuhui
@@ -28,5 +26,12 @@ public class OrderController {
     public Result<OrderSubmitVO> submitOrder(@RequestBody OrdersSubmitDTO ordersSubmitDTO) {
         OrderSubmitVO orderSubmitVO = orderService.submitOrder(ordersSubmitDTO);
         return Result.success(orderSubmitVO);
+    }
+
+    @GetMapping("/historyOrders")
+    @ApiOperation("历史订单查询")
+    public Result<PageResult> page(int page, int pageSize, Integer status) {
+        PageResult pageResult = orderService.pageQueryOrders(page, pageSize, status);
+        return Result.success(pageResult);
     }
 }

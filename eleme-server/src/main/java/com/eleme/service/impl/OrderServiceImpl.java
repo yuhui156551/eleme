@@ -2,6 +2,7 @@ package com.eleme.service.impl;
 
 import com.eleme.constant.MessageConstant;
 import com.eleme.context.BaseContext;
+import com.eleme.dto.OrdersPageQueryDTO;
 import com.eleme.dto.OrdersSubmitDTO;
 import com.eleme.entity.AddressBook;
 import com.eleme.entity.OrderDetail;
@@ -13,8 +14,12 @@ import com.eleme.mapper.AddressBookMapper;
 import com.eleme.mapper.OrderDetailMapper;
 import com.eleme.mapper.OrderMapper;
 import com.eleme.mapper.ShoppingCartMapper;
+import com.eleme.result.PageResult;
 import com.eleme.service.OrderService;
 import com.eleme.vo.OrderSubmitVO;
+import com.eleme.vo.OrderVO;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,5 +107,36 @@ public class OrderServiceImpl implements OrderService {
 
         return orderSubmitVO;
     }
-    
+
+    @Override
+    public PageResult pageQueryOrders(int page, int pageSize, Integer status) {
+        //设置分页
+        PageHelper.startPage(page, pageSize);
+
+        OrdersPageQueryDTO ordersPageQueryDTO = new OrdersPageQueryDTO();
+        ordersPageQueryDTO.setUserId(BaseContext.getCurrentId());
+        ordersPageQueryDTO.setStatus(status);
+
+        //分页条件查询并且按照订单时间倒序排序
+        Page<Orders> page = orderMapper.pageQuery(ordersPageQueryDTO);
+
+        List<OrderVO> list = new ArrayList();
+
+        //查询出订单明细，并封装入OrderVO进行响应
+        if (page != null && page.getTotal() > 0) {
+            for (Orders orders : page) {
+                Long orderId = orders.getId();
+                //根据订单id查询订单明细
+                List<OrderDetail> orderDetails = orderDetailMapper.getByOrderId(orderId);
+
+                OrderVO orderVO = new OrderVO();
+                BeanUtils.copyProperties(orders, orderVO);
+                orderVO.setOrderDetailList(orderDetails);
+
+                list.add(orderVO);
+            }
+        }
+        return new PageResult(page.getTotal(), list);
+    }
+
 }
