@@ -1,5 +1,6 @@
 package com.eleme.service;
 
+import com.eleme.dto.OrdersPageQueryDTO;
 import com.eleme.dto.OrdersSubmitDTO;
 import com.eleme.result.PageResult;
 import com.eleme.vo.OrderSubmitVO;
@@ -41,4 +42,11 @@ public interface OrderService {
      * @param id
      */
     void repetition(Long id);
+
+    /**
+     * 条件搜索订单
+     * @param ordersPageQueryDTO
+     * @return
+     */
+    PageResult conditionSearch(OrdersPageQueryDTO ordersPageQueryDTO);
 }
