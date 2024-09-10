@@ -3,6 +3,7 @@ package com.eleme.service;
 import com.eleme.dto.OrdersPageQueryDTO;
 import com.eleme.dto.OrdersSubmitDTO;
 import com.eleme.result.PageResult;
+import com.eleme.vo.OrderStatisticsVO;
 import com.eleme.vo.OrderSubmitVO;
 import com.eleme.vo.OrderVO;
 
@@ -49,4 +50,10 @@ public interface OrderService {
      * @return
      */
     PageResult conditionSearch(OrdersPageQueryDTO ordersPageQueryDTO);
+
+    /**
+     * 各个状态的订单数量统计
+     * @return
+     */
+    OrderStatisticsVO statistics();
 }
