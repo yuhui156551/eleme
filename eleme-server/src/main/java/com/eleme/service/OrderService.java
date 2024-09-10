@@ -2,6 +2,7 @@ package com.eleme.service;
 
 import com.eleme.dto.OrdersConfirmDTO;
 import com.eleme.dto.OrdersPageQueryDTO;
+import com.eleme.dto.OrdersRejectionDTO;
 import com.eleme.dto.OrdersSubmitDTO;
 import com.eleme.result.PageResult;
 import com.eleme.vo.OrderStatisticsVO;
@@ -64,4 +65,11 @@ public interface OrderService {
      * @param ordersConfirmDTO
      */
     void confirm(OrdersConfirmDTO ordersConfirmDTO);
+
+    /**
+     * 拒单
+     *
+     * @param ordersRejectionDTO
+     */
+    void rejection(OrdersRejectionDTO ordersRejectionDTO) throws Exception;
 }

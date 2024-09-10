@@ -2,6 +2,7 @@ package com.eleme.controller.admin;
 
 import com.eleme.dto.OrdersConfirmDTO;
 import com.eleme.dto.OrdersPageQueryDTO;
+import com.eleme.dto.OrdersRejectionDTO;
 import com.eleme.result.PageResult;
 import com.eleme.result.Result;
 import com.eleme.service.OrderService;
@@ -49,6 +50,13 @@ public class OrderController {
     @ApiOperation("商家接单")
     public Result confirm(@RequestBody OrdersConfirmDTO ordersConfirmDTO) {
         orderService.confirm(ordersConfirmDTO);
+        return Result.success();
+    }
+
+    @PutMapping("/rejection")
+    @ApiOperation("商家拒单")
+    public Result rejection(@RequestBody OrdersRejectionDTO ordersRejectionDTO) throws Exception {
+        orderService.rejection(ordersRejectionDTO);
         return Result.success();
     }
 }
