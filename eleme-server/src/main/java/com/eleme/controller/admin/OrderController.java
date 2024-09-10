@@ -1,5 +1,6 @@
 package com.eleme.controller.admin;
 
+import com.eleme.dto.OrdersCancelDTO;
 import com.eleme.dto.OrdersConfirmDTO;
 import com.eleme.dto.OrdersPageQueryDTO;
 import com.eleme.dto.OrdersRejectionDTO;
@@ -57,6 +58,13 @@ public class OrderController {
     @ApiOperation("商家拒单")
     public Result rejection(@RequestBody OrdersRejectionDTO ordersRejectionDTO) throws Exception {
         orderService.rejection(ordersRejectionDTO);
+        return Result.success();
+    }
+
+    @PutMapping("/cancel")
+    @ApiOperation("取消订单")
+    public Result cancel(@RequestBody OrdersCancelDTO ordersCancelDTO) throws Exception {
+        orderService.cancel(ordersCancelDTO);
         return Result.success();
     }
 }

@@ -2,10 +2,7 @@ package com.eleme.service.impl;
 
 import com.eleme.constant.MessageConstant;
 import com.eleme.context.BaseContext;
-import com.eleme.dto.OrdersConfirmDTO;
-import com.eleme.dto.OrdersPageQueryDTO;
-import com.eleme.dto.OrdersRejectionDTO;
-import com.eleme.dto.OrdersSubmitDTO;
+import com.eleme.dto.*;
 import com.eleme.entity.AddressBook;
 import com.eleme.entity.OrderDetail;
 import com.eleme.entity.Orders;
@@ -273,6 +270,26 @@ public class OrderServiceImpl implements OrderService {
         orders.setRejectionReason(ordersRejectionDTO.getRejectionReason());
         orders.setCancelTime(LocalDateTime.now());
 
+        orderMapper.update(orders);
+    }
+
+    @Override
+    public void cancel(OrdersCancelDTO ordersCancelDTO) {
+        // 根据id查询订单
+        Orders ordersDB = orderMapper.getById(ordersCancelDTO.getId());
+
+        //支付状态
+        Integer payStatus = ordersDB.getPayStatus();
+        if (payStatus == 1) {
+            //TODO 用户已支付，需要退款
+        }
+
+        // 管理端取消订单需要退款，根据订单id更新订单状态、取消原因、取消时间
+        Orders orders = new Orders();
+        orders.setId(ordersCancelDTO.getId());
+        orders.setStatus(Orders.CANCELLED);
+        orders.setCancelReason(ordersCancelDTO.getCancelReason());
+        orders.setCancelTime(LocalDateTime.now());
         orderMapper.update(orders);
     }
 
