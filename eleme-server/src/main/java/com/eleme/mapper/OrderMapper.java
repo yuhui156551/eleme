@@ -4,6 +4,7 @@ import com.eleme.dto.OrdersPageQueryDTO;
 import com.eleme.entity.Orders;
 import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface OrderMapper {
@@ -17,4 +18,10 @@ public interface OrderMapper {
      * @param ordersPageQueryDTO
      */
     Page<Orders> pageQuery(OrdersPageQueryDTO ordersPageQueryDTO);
+    /**
+     * 根据id查询订单
+     * @param id
+     */
+    @Select("select * from orders where id=#{id}")
+    Orders getById(Long id);
 }

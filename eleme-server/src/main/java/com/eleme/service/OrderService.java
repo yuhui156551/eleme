@@ -3,6 +3,7 @@ package com.eleme.service;
 import com.eleme.dto.OrdersSubmitDTO;
 import com.eleme.result.PageResult;
 import com.eleme.vo.OrderSubmitVO;
+import com.eleme.vo.OrderVO;
 
 public interface OrderService {
 
@@ -21,4 +22,11 @@ public interface OrderService {
      * @return
      */
     PageResult pageQueryOrders(int page, int pageSize, Integer status);
+
+    /**
+     * 订单详情
+     * @param id
+     * @return
+     */
+    OrderVO details(Long id);
 }

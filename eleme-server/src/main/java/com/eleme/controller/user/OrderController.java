@@ -5,6 +5,7 @@ import com.eleme.result.PageResult;
 import com.eleme.result.Result;
 import com.eleme.service.OrderService;
 import com.eleme.vo.OrderSubmitVO;
+import com.eleme.vo.OrderVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,5 +34,12 @@ public class OrderController {
     public Result<PageResult> page(int page, int pageSize, Integer status) {
         PageResult pageResult = orderService.pageQueryOrders(page, pageSize, status);
         return Result.success(pageResult);
+    }
+
+    @GetMapping("/orderDetail/{id}")
+    @ApiOperation("查询订单详情")
+    public Result<OrderVO> details(@PathVariable("id") Long id) {
+        OrderVO orderVO = orderService.details(id);
+        return Result.success(orderVO);
     }
 }

@@ -109,9 +109,9 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public PageResult pageQueryOrders(int page, int pageSize, Integer status) {
+    public PageResult pageQueryOrders(int pageNum, int pageSize, Integer status) {
         //设置分页
-        PageHelper.startPage(page, pageSize);
+        PageHelper.startPage(pageNum, pageSize);
 
         OrdersPageQueryDTO ordersPageQueryDTO = new OrdersPageQueryDTO();
         ordersPageQueryDTO.setUserId(BaseContext.getCurrentId());
@@ -137,6 +137,22 @@ public class OrderServiceImpl implements OrderService {
             }
         }
         return new PageResult(page.getTotal(), list);
+    }
+
+    @Override
+    public OrderVO details(Long id) {
+        //1、根据id查询订单
+        Orders orders = orderMapper.getById(id);
+
+        //2、查询该订单对应的菜品/套餐明细
+        List<OrderDetail> orderDetailList = orderDetailMapper.getByOrderId(orders.getId());
+
+        //3、将该订单及其详情封装到OrderVO并返回
+        OrderVO orderVO = new OrderVO();
+        BeanUtils.copyProperties(orders, orderVO);
+        orderVO.setOrderDetailList(orderDetailList);
+
+        return orderVO;
     }
 
 }
