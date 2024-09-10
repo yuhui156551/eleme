@@ -9,6 +9,7 @@ import com.eleme.entity.OrderDetail;
 import com.eleme.entity.Orders;
 import com.eleme.entity.ShoppingCart;
 import com.eleme.exception.AddressBookBusinessException;
+import com.eleme.exception.OrderBusinessException;
 import com.eleme.exception.ShoppingCartBusinessException;
 import com.eleme.mapper.AddressBookMapper;
 import com.eleme.mapper.OrderDetailMapper;
@@ -26,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -153,6 +155,36 @@ public class OrderServiceImpl implements OrderService {
         orderVO.setOrderDetailList(orderDetailList);
 
         return orderVO;
+    }
+
+    @Override
+    public void userCancelById(Long id) throws Exception {
+        //1、根据id查询订单
+        Orders ordersDB = orderMapper.getById(id);
+        //2、校验订单是否存在
+        if (ordersDB == null) {
+            throw new OrderBusinessException(MessageConstant.ORDER_NOT_FOUND);
+        }
+        //3、检查订单状态 1待付款 2待接单 3已接单 4派送中 5已完成 6已取消
+        if (ordersDB.getStatus() > 2) {
+            throw new OrderBusinessException(MessageConstant.ORDER_STATUS_ERROR);
+        }
+
+        Orders orders = new Orders();
+        orders.setId(ordersDB.getId());
+
+        //4、订单处于待接单状态下取消，需要进行退款
+        if (ordersDB.getStatus().equals(Orders.TO_BE_CONFIRMED)) {
+            //TODO 调用微信支付退款接口
+            
+            //支付状态修改为“退款”
+            orders.setPayStatus(Orders.REFUND);
+        }
+        //5、更新订单状态、取消原因、取消时间
+        orders.setStatus(Orders.CANCELLED);
+        orders.setCancelReason("用户取消");
+        orders.setCancelTime(LocalDateTime.now());
+        orderMapper.update(orders);
     }
 
 }
