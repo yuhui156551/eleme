@@ -1,5 +1,6 @@
 package com.eleme.service;
 
+import com.eleme.dto.OrdersConfirmDTO;
 import com.eleme.dto.OrdersPageQueryDTO;
 import com.eleme.dto.OrdersSubmitDTO;
 import com.eleme.result.PageResult;
@@ -56,4 +57,11 @@ public interface OrderService {
      * @return
      */
     OrderStatisticsVO statistics();
+
+    /**
+     * 接单
+     *
+     * @param ordersConfirmDTO
+     */
+    void confirm(OrdersConfirmDTO ordersConfirmDTO);
 }

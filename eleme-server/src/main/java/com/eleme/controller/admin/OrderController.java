@@ -1,5 +1,6 @@
 package com.eleme.controller.admin;
 
+import com.eleme.dto.OrdersConfirmDTO;
 import com.eleme.dto.OrdersPageQueryDTO;
 import com.eleme.result.PageResult;
 import com.eleme.result.Result;
@@ -9,10 +10,7 @@ import com.eleme.vo.OrderVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author yuhui
@@ -45,5 +43,12 @@ public class OrderController {
     public Result<OrderVO> details(@PathVariable("id") Long id) {
         OrderVO orderVO = orderService.details(id);
         return Result.success(orderVO);
+    }
+
+    @PutMapping("/confirm")
+    @ApiOperation("商家接单")
+    public Result confirm(@RequestBody OrdersConfirmDTO ordersConfirmDTO) {
+        orderService.confirm(ordersConfirmDTO);
+        return Result.success();
     }
 }

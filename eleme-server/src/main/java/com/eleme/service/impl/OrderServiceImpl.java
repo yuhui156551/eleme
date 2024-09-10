@@ -2,6 +2,7 @@ package com.eleme.service.impl;
 
 import com.eleme.constant.MessageConstant;
 import com.eleme.context.BaseContext;
+import com.eleme.dto.OrdersConfirmDTO;
 import com.eleme.dto.OrdersPageQueryDTO;
 import com.eleme.dto.OrdersSubmitDTO;
 import com.eleme.entity.AddressBook;
@@ -235,6 +236,17 @@ public class OrderServiceImpl implements OrderService {
         orderStatisticsVO.setConfirmed(confirmed);
         orderStatisticsVO.setDeliveryInProgress(deliveryInProgress);
         return orderStatisticsVO;
+    }
+
+    @Override
+    public void confirm(OrdersConfirmDTO ordersConfirmDTO) {
+        //订单状态设置为已接单
+        Orders orders = Orders.builder()
+                .id(ordersConfirmDTO.getId())
+                .status(Orders.CONFIRMED)
+                .build();
+
+        orderMapper.update(orders);
     }
 
     private List<OrderVO> getOrderVOList(Page<Orders> page) {
