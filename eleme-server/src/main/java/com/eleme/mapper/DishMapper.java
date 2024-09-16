@@ -44,4 +44,6 @@ public interface DishMapper {
 
     @AutoFill(value = OperationType.UPDATE)
     void update(Dish dish);
+
+    void deleteById(Long id);
 }

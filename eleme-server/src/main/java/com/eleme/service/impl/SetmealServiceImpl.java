@@ -41,6 +41,7 @@ public class SetmealServiceImpl implements SetmealService {
      */
     @Transactional
     public void save(SetmealDTO setmealDTO) {
+        setmealDTO.setStatus(1);
         Setmeal setmeal = new Setmeal();
         BeanUtils.copyProperties(setmealDTO, setmeal);
         setmealMapper.insert(setmeal);

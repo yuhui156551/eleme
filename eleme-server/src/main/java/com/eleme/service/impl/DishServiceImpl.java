@@ -52,6 +52,7 @@ public class DishServiceImpl implements DishService {
     @Override
     @Transactional
     public void saveWithFlavor(DishDTO dishDTO) {
+        dishDTO.setStatus(1);
         Dish dish = new Dish();
         BeanUtils.copyProperties(dishDTO, dish);
 
@@ -81,13 +82,13 @@ public class DishServiceImpl implements DishService {
     @Transactional
     public void deleteBatch(List<Long> ids) {
         //判断当前菜品是否能够删除---是否存在起售中的菜品？？
-        for (Long id : ids) {
-            Dish dish = dishMapper.getById(id);//后绪步骤实现
-            if (dish.getStatus() == StatusConstant.ENABLE) {
-                //当前菜品处于起售中，不能删除
-                throw new DeletionNotAllowedException(MessageConstant.DISH_ON_SALE);
-            }
-        }
+//        for (Long id : ids) {
+//            Dish dish = dishMapper.getById(id);//后绪步骤实现
+//            if (dish.getStatus() == StatusConstant.ENABLE) {
+//                //当前菜品处于起售中，不能删除
+//                throw new DeletionNotAllowedException(MessageConstant.DISH_ON_SALE);
+//            }
+//        }
 
         //判断当前菜品是否能够删除---是否被套餐关联了？？
         List<Long> setmealIds = setmealDishMapper.getSetmealIdsByDishIds(ids);
@@ -98,7 +99,7 @@ public class DishServiceImpl implements DishService {
 
         //删除菜品表中的菜品数据，逻辑删除，将delete设置为1即可
         for (Long id : ids) {
-            //TODO dishMapper.deleteById(id);
+            dishMapper.deleteById(id);
             //删除菜品关联的口味数据
             dishFlavorMapper.deleteByDishId(id);//后绪步骤实现
         }
