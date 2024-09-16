@@ -49,4 +49,6 @@ public interface ShoppingCartMapper {
      * @param shoppingCartList
      */
     void insertBatch(List<ShoppingCart> shoppingCartList);
+
+    void deleteById(Long id);
 }
