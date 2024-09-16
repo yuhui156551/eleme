@@ -17,12 +17,12 @@ public interface OrderService {
 
     /**
      * 用户端订单分页查询 订单状态 1待付款 2待接单 3已接单 4派送中 5已完成 6已取消
-     * @param page
+     * @param pageNum
      * @param pageSize
      * @param status
      * @return
      */
-    PageResult pageQueryOrders(int page, int pageSize, Integer status);
+    PageResult pageQueryOrders(int pageNum, int pageSize, Integer status);
 
     /**
      * 订单详情

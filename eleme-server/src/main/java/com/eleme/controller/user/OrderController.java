@@ -31,8 +31,8 @@ public class OrderController {
 
     @GetMapping("/historyOrders")
     @ApiOperation("历史订单查询")
-    public Result<PageResult> page(int page, int pageSize, Integer status) {
-        PageResult pageResult = orderService.pageQueryOrders(page, pageSize, status);
+    public Result<PageResult> page(int pageNum, int pageSize, Integer status) {
+        PageResult pageResult = orderService.pageQueryOrders(pageNum, pageSize, status);
         return Result.success(pageResult);
     }
 

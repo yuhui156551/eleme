@@ -39,8 +39,8 @@ public interface DishMapper {
     @Select("select * from dish where id = #{id}")
     Dish getById(Long id);
 
-    @Update("update dish set deleted = 1 where id = #{id}")
-    void deleteById(Long id);
+//    @Update("update dish set deleted = 1 where id = #{id}")
+//    void deleteById(Long id);
 
     @AutoFill(value = OperationType.UPDATE)
     void update(Dish dish);

@@ -60,17 +60,14 @@ public class OrderServiceImpl implements OrderService {
         if (addressBook == null) {
             throw new AddressBookBusinessException(MessageConstant.ADDRESS_BOOK_IS_NULL);
         }
-
         Long userId = BaseContext.getCurrentId();
         ShoppingCart shoppingCart = new ShoppingCart();
         shoppingCart.setUserId(userId);
-
         //2、查询当前用户的购物车数据，看是否为空
         List<ShoppingCart> shoppingCartList = shoppingCartMapper.list(shoppingCart);
         if (shoppingCartList == null || shoppingCartList.size() == 0) {
             throw new ShoppingCartBusinessException(MessageConstant.SHOPPING_CART_IS_NULL);
         }
-
         //3、构造订单数据
         Orders order = new Orders();
         BeanUtils.copyProperties(ordersSubmitDTO,order);
@@ -82,10 +79,8 @@ public class OrderServiceImpl implements OrderService {
         order.setStatus(Orders.PENDING_PAYMENT);
         order.setPayStatus(Orders.UN_PAID);
         order.setOrderTime(LocalDateTime.now());
-
         //4、向订单表插入1条数据
         orderMapper.insert(order);
-
         //5、订单明细数据
         List<OrderDetail> orderDetailList = new ArrayList<>();
         for (ShoppingCart cart : shoppingCartList) {
@@ -94,13 +89,10 @@ public class OrderServiceImpl implements OrderService {
             orderDetail.setOrderId(order.getId());
             orderDetailList.add(orderDetail);
         }
-
         //6、向明细表插入n条数据
         orderDetailMapper.insertBatch(orderDetailList);
-
         //7、清理购物车中的数据
         shoppingCartMapper.deleteByUserId(userId);
-
         //8、封装返回结果
         OrderSubmitVO orderSubmitVO = OrderSubmitVO.builder()
                 .id(order.getId())
@@ -108,7 +100,6 @@ public class OrderServiceImpl implements OrderService {
                 .orderAmount(order.getAmount())
                 .orderTime(order.getOrderTime())
                 .build();
-
         return orderSubmitVO;
     }
 

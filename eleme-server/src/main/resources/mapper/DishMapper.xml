@@ -15,9 +15,7 @@
             <if test="status != null">
                 and status = #{status}
             </if>
-            <if test="delete != null">
-                and delete = #{delete}
-            </if>
+        
         </where>
         order by create_time desc
     </select>
@@ -39,9 +37,7 @@
             <if test="status != null">
                 and d.status = #{status}
             </if>
-            <if test="delete != null">
-                and delete = #{delete}
-            </if>
+            
         </where>
         order by d.create_time desc
     </select>
@@ -57,7 +53,7 @@
             <if test="status != null">status = #{status},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
             <if test="updateUser != null">update_user = #{updateUser},</if>
-            <if test="delete != null">delete = #{delete},</if>
+    
         </set>
         where id = #{id}
     </update>

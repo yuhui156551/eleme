@@ -47,6 +47,6 @@ public class Dish implements Serializable {
 
     private Long updateUser;
     //1删除 0正常
-    private Integer deleted;
+    //private Integer deleted;
 
 }
